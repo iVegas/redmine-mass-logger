@@ -14,25 +14,31 @@
     boxTabular.className = 'box tabular';
     newForm.appendChild(boxTabular);
 
+    const wrapElements = (parent, ...children)=> {
+        const wrapper = document.createElement('p');
+        for (let child in children) {
+            wrapper.appendChild(child);
+        }
+        parent.appendChild(wrapper);
+    };
+
     // Function to create and append elements to the form
     const appendFormElements = (parent) => {
         // Create and append Comment textfield
         const commentLabel = document.createElement('label');
         commentLabel.htmlFor = 'comment';
         commentLabel.innerText = 'Comment:';
-        parent.appendChild(commentLabel);
 
         const commentInput = document.createElement('input');
         commentInput.type = 'text';
         commentInput.id = 'comment';
         commentInput.name = 'comment';
-        parent.appendChild(commentInput);
+        wrapElements(parent, commentLabel, commentInput);
 
         // Create and append Hours number input
         const hoursLabel = document.createElement('label');
         hoursLabel.htmlFor = 'hours';
         hoursLabel.innerText = 'Hours:';
-        parent.appendChild(hoursLabel);
 
         const hoursInput = document.createElement('input');
         hoursInput.type = 'number';
@@ -41,7 +47,7 @@
         hoursInput.min = '0';
         hoursInput.max = '10';
         hoursInput.step = '0.01';
-        parent.appendChild(hoursInput);
+        wrapElements(parent, hoursLabel, hoursInput);
 
         // Get current year and month
         const currentYear = new Date().getFullYear();
@@ -51,12 +57,8 @@
         const yearLabel = document.createElement('label');
         yearLabel.htmlFor = 'year';
         yearLabel.innerText = 'Year:';
-        parent.appendChild(yearLabel);
 
         const yearSelect = document.createElement('select');
-        yearSelect.id = 'year';
-        yearSelect.name = 'year';
-        parent.appendChild(yearSelect);
 
         [currentYear - 1, currentYear, currentYear + 1].forEach(year => {
             const option = document.createElement('option');
@@ -68,16 +70,15 @@
             yearSelect.appendChild(option);
         });
 
+        yearSelect.id = 'year';
+        yearSelect.name = 'year';
+
         // Create and append Month select
         const monthLabel = document.createElement('label');
         monthLabel.htmlFor = 'month';
         monthLabel.innerText = 'Month:';
-        parent.appendChild(monthLabel);
 
         const monthSelect = document.createElement('select');
-        monthSelect.id = 'month';
-        monthSelect.name = 'month';
-        parent.appendChild(monthSelect);
 
         for (let i = 1; i <= 12; i++) {
             const option = document.createElement('option');
@@ -88,6 +89,10 @@
             }
             monthSelect.appendChild(option);
         }
+
+        monthSelect.id = 'month';
+        monthSelect.name = 'month';
+        wrapElements(parent, yearLabel, yearSelect, monthLabel, monthSelect);
     };
 
     // Fill the new form with elements
