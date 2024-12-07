@@ -210,20 +210,23 @@
     // Function to fill form elements, trigger click, and close tab upon success notice
     const processEntryInTab = async (entry, url) => {
         const newTab = await openTab(url);
-        const doc = newTab.document;
+        newTab.addEventListener('load', async (event) => {
+            const doc = newTab.document;
 
-        await waitForElements(doc, ['#time_entry_spent_on', '#time_entry_hours', '#time_entry_activity_id', '#time_entry_comments', 'input[name="continue"]'], 9);
+            await waitForElements(doc, ['#time_entry_spent_on', '#time_entry_hours', '#time_entry_activity_id', '#time_entry_comments', 'input[name="continue"]'], 9);
 
-        doc.querySelector('#time_entry_spent_on').value = entry.date;
-        doc.querySelector('#time_entry_hours').value = entry.hours;
-        doc.querySelector('#time_entry_activity_id').value = 9;
-        doc.querySelector('#time_entry_comments').value = entry.comment;
+            doc.querySelector('#time_entry_spent_on').value = entry.date;
+            doc.querySelector('#time_entry_hours').value = entry.hours;
+            doc.querySelector('#time_entry_activity_id').value = 9;
+            doc.querySelector('#time_entry_comments').value = entry.comment;
 
-        doc.querySelector('input[name="continue"]').click();
+            doc.querySelector('input[name="continue"]').click();
 
-        await waitForElements(doc, ['#flash_notice'], 3);
+            await waitForElements(doc, ['#flash_notice'], 3);
 
-        newTab.close();
+            newTab.close();
+        });
+        
     };
 
     // Function to process all log entries one by one
