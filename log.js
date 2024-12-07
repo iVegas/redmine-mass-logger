@@ -16,8 +16,8 @@
 
     const wrapElements = (parent, ...children)=> {
         const wrapper = document.createElement('p');
-        for (let child in children) {
-            wrapper.appendChild(child);
+        for (let i in children) {
+            wrapper.appendChild(children[i]);
         }
         parent.appendChild(wrapper);
     };
