@@ -92,8 +92,15 @@
 
         monthSelect.id = 'month';
         monthSelect.name = 'month';
-        wrapElements(parent, yearLabel, yearSelect, monthLabel, monthSelect);
+        wrapElements(parent, yearLabel, yearSelect);
+        wrapElements(parent, monthLabel, monthSelect);
     };
+
+    // Add Perform Log button
+    const performLogButton = document.createElement('button');
+    performLogButton.type = 'button';
+    performLogButton.innerText = 'Perform log';
+    boxTabular.appendChild(performLogButton);
 
     // Fill the new form with elements
     appendFormElements(boxTabular);
@@ -174,12 +181,6 @@
 
     // Event listener for adding first dimension
     addFirstDimButton.addEventListener('click', createFirstDim);
-
-    // Add Perform Log button
-    const performLogButton = document.createElement('button');
-    performLogButton.type = 'button';
-    performLogButton.innerText = 'Perform log';
-    boxTabular.appendChild(performLogButton);
 
     // Function to open a new tab and return a promise with the tab's document object
     const openTab = (url) => {
