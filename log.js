@@ -14,6 +14,10 @@
     boxTabular.className = 'box tabular';
     newForm.appendChild(boxTabular);
 
+    const padNumber = (number) => {
+        return number.toString().padStart(2, '0');
+    };
+
     const wrapElements = (parent, ...children)=> {
         const wrapper = document.createElement('p');
         for (let i in children) {
@@ -267,9 +271,9 @@
                 const start = range[0];
                 const end = range[1];
                 return Array(end - start + 1).fill().map((_, idx) => {
-                    const date = start + idx;
+                    const day = start + idx;
                     return {
-                        date: [year, month, date].join('-'),
+                        date: [year, padNumber(month), padNumber(day)].join('-'),
                         hours: hours,
                         comment: comment
                     };
@@ -277,7 +281,7 @@
             } else {
                 return range.map(day => {
                     return {
-                        date: [year, month, day].join('-'),
+                        date: [year, padNumber(month), padNumber(day)].join('-'),
                         hours: hours,
                         comment: comment
                     };
